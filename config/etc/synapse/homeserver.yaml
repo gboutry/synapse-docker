@@ -1,0 +1,44 @@
+# Configuration file for Synapse.
+#
+# This is a YAML file: see [1] for a quick introduction. Note in particular
+# that *indentation is important*: all the elements of a list or dictionary
+# should have the same indentation.
+#
+# [1] https://docs.ansible.com/ansible/latest/reference_appendices/YAMLSyntax.html
+#
+# For more information on how to configure Synapse, including a complete accounting of
+# each option, go to docs/usage/configuration/config_documentation.md or
+# https://matrix-org.github.io/synapse/latest/usage/configuration/config_documentation.html
+server_name: "gboutry.lan"
+pid_file: /data/homeserver.pid
+listeners:
+  - port: 8008
+    tls: false
+    type: http
+    x_forwarded: true
+    resources:
+      - names: [client, federation]
+        compress: false
+enable_registration: true
+enable_registration_without_verification: true # its bad, but okay since local env
+database:
+  name: psycopg2
+  args:
+    user: synapse
+    password: synapse
+    database: synapse
+    host: database
+    port: 5432
+    cp_min: 5
+    cp_max: 10
+log_config: "/etc/synapse/gboutry.lan.log.config"
+media_store_path: /data/media_store
+registration_shared_secret: "r=oBdZUV1qAWEe#C*D8kH~y1k=guy9ZZ7kYIdXfX2:Bre,Qx:N"
+report_stats: true
+macaroon_secret_key: "edCd9#hPFHixnQCD2B^oLXc4uc:Dt9iG;Edr~PhuA5*pU5~F_J"
+form_secret: "6,R3.p+5,;.SvHl&d,#OHY_y9AjFgcjd6cUGJ7n.G~L@jD&ZId"
+signing_key_path: "/etc/synapse/gboutry.lan.signing.key"
+trusted_key_servers:
+  - server_name: "matrix.org"
+
+# vim:ft=yaml

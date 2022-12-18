@@ -1,0 +1,8 @@
+CREATE USER synapse WITH PASSWORD 'synapse';
+---
+CREATE DATABASE synapse TEMPLATE 'template0' ENCODING 'utf8' LOCALE 'C';
+\connect synapse
+CREATE SCHEMA synapse AUTHORIZATION synapse;
+---
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA synapse TO synapse;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA synapse TO synapse;

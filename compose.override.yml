@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  database:
+    labels:
+      traefik.enable: "false"
+
+  init_homeserver:
+    labels:
+      traefik.enable: "false"
+
+  homeserver:
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: proxy
+
+      traefik.http.routers.homeserver.rule: Host(`gboutry.lan`)
+      traefik.http.routers.homeserver.tls: "true"
+      traefik.http.routers.homeserver.tls.certresolver: pebble
+      traefik.http.routers.homeserver.middlewares: cors-headers@docker
+
+      traefik.http.middlewares.cors-headers.headers.accessControlAllowOriginList: "*"
+      traefik.http.middlewares.cors-headers.headers.accessControlAllowHeaders: Origin, X-Requested-With, Content-Type, Accept, Authorization
+      traefik.http.middlewares.cors-headers.headers.accessControlAllowMethods: GET, POST, PUT, DELETE, OPTIONS
+
+  well-known:
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: proxy
+
+      traefik.http.routers.to-matrix-wellknown.rule: Host(`gboutry.lan`) && PathPrefix(`/.well-known/matrix`)
+      traefik.http.routers.to-matrix-wellknown.tls: true
+      traefik.http.routers.to-matrix-wellknown.tls.certresolver: pebble
+      traefik.http.routers.to-matrix-wellknown.middlewares: cors-headers@docker
+
+      traefik.http.middlewares.cors-headers.headers.accessControlAllowOriginList: "*"
+      traefik.http.middlewares.cors-headers.headers.accessControlAllowHeaders: Origin, X-Requested-With, Content-Type, Accept, Authorization
+      traefik.http.middlewares.cors-headers.headers.accessControlAllowMethods: GET, POST, PUT, DELETE, OPTIONS
+
+    ### Uncomment this if you uncommented Element-Web App in the docker-compose.yml
+  element-web:
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: proxy # Change this to the name of your Traefik docker proxy network
+
+      traefik.http.routers.to-element-web.rule: Host(`chat.gboutry.lan`) # Change to the address on which Element-Web is hosted
+      traefik.http.routers.to-element-web.tls: true
+      traefik.http.routers.to-element-web.tls.certresolver: pebble
