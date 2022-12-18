@@ -45,6 +45,12 @@ services:
       - ./config/etc/synapse:/etc/synapse:ro
       - synapse-data:/data
 
+  homeserver_admin:
+    image: awesometechnologies/synapse-admin:0.8.5
+    restart: unless-stopped
+    networks:
+      - proxy
+
   well-known:
     image: nginx:1.23.3
     networks:

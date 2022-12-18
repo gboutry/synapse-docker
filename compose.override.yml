@@ -23,6 +23,20 @@ services:
       traefik.http.middlewares.cors-headers.headers.accessControlAllowHeaders: Origin, X-Requested-With, Content-Type, Accept, Authorization
       traefik.http.middlewares.cors-headers.headers.accessControlAllowMethods: GET, POST, PUT, DELETE, OPTIONS
 
+  homeserver_admin:
+    labels:
+      traefik.enable: "true"
+      traefik.docker.network: proxy
+
+      traefik.http.routers.homeserver_admin.rule: Host(`admin.gboutry.lan`)
+      traefik.http.routers.homeserver_admin.tls: "true"
+      traefik.http.routers.homeserver_admin.tls.certresolver: pebble
+      traefik.http.routers.homeserver_admin.middlewares: cors-headers@docker
+
+      traefik.http.middlewares.cors-headers.headers.accessControlAllowOriginList: "*"
+      traefik.http.middlewares.cors-headers.headers.accessControlAllowHeaders: Origin, X-Requested-With, Content-Type, Accept, Authorization
+      traefik.http.middlewares.cors-headers.headers.accessControlAllowMethods: GET, POST, PUT, DELETE, OPTIONS
+
   well-known:
     labels:
       traefik.enable: "true"
