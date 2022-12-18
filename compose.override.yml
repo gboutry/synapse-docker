@@ -37,20 +37,6 @@ services:
       traefik.http.middlewares.cors-headers.headers.accessControlAllowHeaders: Origin, X-Requested-With, Content-Type, Accept, Authorization
       traefik.http.middlewares.cors-headers.headers.accessControlAllowMethods: GET, POST, PUT, DELETE, OPTIONS
 
-  well-known:
-    labels:
-      traefik.enable: "true"
-      traefik.docker.network: proxy
-
-      traefik.http.routers.to-matrix-wellknown.rule: Host(`gboutry.lan`) && PathPrefix(`/.well-known/matrix`)
-      traefik.http.routers.to-matrix-wellknown.tls: true
-      traefik.http.routers.to-matrix-wellknown.tls.certresolver: pebble
-      traefik.http.routers.to-matrix-wellknown.middlewares: cors-headers@docker
-
-      traefik.http.middlewares.cors-headers.headers.accessControlAllowOriginList: "*"
-      traefik.http.middlewares.cors-headers.headers.accessControlAllowHeaders: Origin, X-Requested-With, Content-Type, Accept, Authorization
-      traefik.http.middlewares.cors-headers.headers.accessControlAllowMethods: GET, POST, PUT, DELETE, OPTIONS
-
     ### Uncomment this if you uncommented Element-Web App in the docker-compose.yml
   element-web:
     labels:

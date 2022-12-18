@@ -51,14 +51,6 @@ services:
     networks:
       - proxy
 
-  well-known:
-    image: nginx:1.23.3
-    networks:
-      - proxy
-    restart: unless-stopped
-    volumes:
-      - ./config/etc/nginx/conf.d/matrix.conf:/etc/nginx/conf.d/matrix.conf:ro
-
   element-web:
     image: vectorim/element-web:v1.11.16
     restart: unless-stopped
