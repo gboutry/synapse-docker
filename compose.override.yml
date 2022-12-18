@@ -14,7 +14,7 @@ services:
       traefik.enable: "true"
       traefik.docker.network: proxy
 
-      traefik.http.routers.homeserver.rule: Host(`gboutry.lan`)
+      traefik.http.routers.homeserver.rule: Host(`matrix.gboutry.lan`)
       traefik.http.routers.homeserver.tls: "true"
       traefik.http.routers.homeserver.tls.certresolver: pebble
       traefik.http.routers.homeserver.middlewares: cors-headers@docker
